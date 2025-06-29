@@ -1,33 +1,18 @@
-#!/usr/bin/env python3
+from flask import Flask
+from flask_restful import Api
+from server.resources import Signup, CheckSession, Login, Logout, RecipeIndex
 
-from flask import request, session
-from flask_restful import Resource
-from sqlalchemy.exc import IntegrityError
+app = Flask(__name__)
+app.secret_key = "your_secret_key_here"  # Set your secret key here
 
-from config import app, db, api
-from models import User, Recipe, UserSchema, RecipeSchema
+api = Api(app)
 
-class Signup(Resource):
-    pass
-
-class CheckSession(Resource):
-    pass
-
-class Login(Resource):
-    pass
-
-class Logout(Resource):
-    pass
-
-class RecipeIndex(Resource):
-    pass
-
+# Add resources only once here
 api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(RecipeIndex, '/recipes', endpoint='recipes')
 
-
-if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
